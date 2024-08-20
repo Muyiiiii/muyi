@@ -2,6 +2,7 @@ import os
 import matplotlib.pyplot as plt
 import pandas as pd
 from tqdm import tqdm
+import sys
 
 def color_print(content):
     print(f'\033[1;46m{content}\033[0m\n')
