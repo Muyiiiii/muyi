@@ -20,7 +20,7 @@ def save_pic_iterly(pic_name, postfix, info):
 
     color_print(f'!!!!! {info} is saved in file {pic_name_full}')
 
-def read_csv_iterly(path, **kwargs):
+def read_csv_tqdm(path, **kwargs):
     INPUT_FILENAME = path
     LINES_TO_READ_FOR_ESTIMATION = 20
     CHUNK_SIZE_PER_ITERATION = 10**5

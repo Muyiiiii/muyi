@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: Muyi
-Version: 0.0.4
+Version: 0.0.6
 Summary: Some useful utils.
 Home-page: https://github.com/Muyiiiii/muyi
 Author: muyiiiii
@@ -16,29 +16,19 @@ License-File: LICENSE
 
 Some useful utils for GNNs and Deep Learning.
 
-
-
 ```bash
 pip install muyi
 ```
-
-
-
-
 
 ## utils
 
 1. `color_print(content)`
 2. `save_pic_iterly(pic_name, postfix, info)`
-3. `read_csv_iterly(path, **kwargs)`
-
-
+3. `read_csv_tqdm(path, **kwargs)`
 
 ## graph
 
 1. `pyg_data_to_dgl_graph(pyg_data_obj)`
-
-
 
 ## gpu
 
