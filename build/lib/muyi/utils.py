@@ -39,6 +39,8 @@ def read_csv_tqdm(path, **kwargs):
             pbar.set_description('Importing: %d' % (1 + i))
             pbar.update(1)
 
-    data = temp[:0].append(df)
+    # data = temp[:0].append(df)
+    data = pd.concat(df)
+    
     del df            
     return data
