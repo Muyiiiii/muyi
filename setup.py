@@ -3,7 +3,7 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 setuptools.setup(
     name="Muyi",  # 模块名称
-    version="0.0.7",  # 当前版本
+    version="0.0.8",  # 当前版本
     author="muyiiiii",  # 作者
     author_email="",  # 作者邮箱
     description="Some useful utils.",  # 模块简介
