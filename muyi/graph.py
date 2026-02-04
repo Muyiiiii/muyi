@@ -1,7 +1,6 @@
-import torch
-import dgl
-
 def pyg_data_to_dgl_graph(pyg_data_obj):
+    import torch
+    import dgl
     print(pyg_data_obj)
 
     # 获取边索引

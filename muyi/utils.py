@@ -1,7 +1,5 @@
 import os
-import matplotlib.pyplot as plt
-import pandas as pd
-from tqdm import tqdm
+import csv
 import sys
 
 class bcolors:
@@ -64,6 +62,8 @@ def color_print(content, font_color='white', bg_color='bg_blue'):
     print(f'{colors[bg_color]}{colors[font_color]}{content}{colors["end"]}\n')
 
 def save_pic_iterly(pic_name, postfix, info):
+    import matplotlib.pyplot as plt
+
     pic_idx=1
     pic_name_full=f'{pic_name}_{pic_idx}.{postfix}'
 
@@ -77,6 +77,9 @@ def save_pic_iterly(pic_name, postfix, info):
     color_print(f'!!!!! {info} is saved in file {pic_name_full}')
 
 def read_csv_tqdm(path, **kwargs):
+    import pandas as pd
+    from tqdm import tqdm
+
     INPUT_FILENAME = path
     LINES_TO_READ_FOR_ESTIMATION = 20
     CHUNK_SIZE_PER_ITERATION = 10**5
@@ -100,3 +103,68 @@ def read_csv_tqdm(path, **kwargs):
     
     del df            
     return data
+
+def save_result_csv(csv_path, data):
+    """保存结果到CSV文件（通用型）
+
+    Args:
+        csv_path: CSV文件路径
+        data: dict, 包含要保存的数据，key为列名，value为对应的值
+    """
+    file_exists = os.path.exists(csv_path)
+    headers = list(data.keys())
+    values = list(data.values())
+
+    with open(csv_path, 'a', newline='') as f:
+        writer = csv.writer(f)
+        if not file_exists:
+            writer.writerow(headers)
+        writer.writerow(values)
+
+    print(f"Results saved to {csv_path}")
+
+def get_unique_save_path(folder_path, base_name_pattern, start_no=1):
+    """生成不重复的保存路径，自动递增版本号。
+
+    通过检查文件是否存在，自动递增编号直到找到一个不存在的文件路径。
+    如果目标文件夹不存在，会自动创建。
+
+    Args:
+        folder_path: 目标文件夹路径
+        base_name_pattern: 文件名模板，必须包含 {no} 占位符用于插入编号
+            例如: "result_{no}.csv", "model_v{no}.pt"
+        start_no: 起始编号，默认为 1
+
+    Returns:
+        str: 不重复的完整文件路径
+
+    Examples:
+        >>> get_unique_save_path("./output", "result_{no}.csv")
+        './output/result_1.csv'  # 如果不存在
+
+        >>> get_unique_save_path("./output", "result_{no}.csv")
+        './output/result_2.csv'  # 如果 result_1.csv 已存在
+
+        >>> get_unique_save_path("./models", "checkpoint_v{no}.pt", start_no=10)
+        './models/checkpoint_v10.pt'  # 从编号 10 开始
+
+        # 使用 f-string 动态构建模板（注意 {no} 需要用双花括号转义）
+        >>> model_name = "transformer"
+        >>> dataset = "ETTh1"
+        >>> get_unique_save_path("./results", f"{model_name}_{dataset}_{{no}}.csv")
+        './results/transformer_ETTh1_1.csv'
+
+        >>> pred_len = 96
+        >>> get_unique_save_path("./output", f"pred{pred_len}_exp{{no}}.npy")
+        './output/pred96_exp1.npy'
+    """
+    if not os.path.exists(folder_path):
+        os.makedirs(folder_path)
+
+    no = start_no
+    while True:
+        filename = base_name_pattern.format(no=no)
+        full_path = os.path.join(folder_path, filename)
+        if not os.path.exists(full_path):
+            return full_path
+        no += 1

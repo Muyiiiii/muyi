@@ -1,6 +1,5 @@
-import GPUtil
-
 def get_gpu_memory_usage():
+    import GPUtil
     # 获取GPU使用情况
     gpus = GPUtil.getGPUs()
     gpu_memory_info = []

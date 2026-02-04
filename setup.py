@@ -3,7 +3,7 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 setuptools.setup(
     name="Muyi",  # 模块名称
-    version="0.0.8",  # 当前版本
+    version="0.0.9",  # 当前版本
     author="muyiiiii",  # 作者
     author_email="",  # 作者邮箱
     description="Some useful utils.",  # 模块简介
@@ -19,6 +19,22 @@ setuptools.setup(
     ],
     # 依赖模块
     install_requires=[
+        # 无核心依赖，所有依赖都是可选的
     ],
+    # 可选依赖
+    extras_require={
+        'plot': ['matplotlib'],           # save_pic_iterly
+        'csv': ['pandas', 'tqdm'],        # read_csv_tqdm
+        'gpu': ['GPUtil'],                # get_gpu_memory_usage
+        'graph': ['torch', 'dgl'],        # pyg_data_to_dgl_graph
+        'all': [                          # 安装全部
+            'matplotlib',
+            'pandas',
+            'tqdm',
+            'GPUtil',
+            'torch',
+            'dgl',
+        ],
+    },
     python_requires='>=3',
 )
