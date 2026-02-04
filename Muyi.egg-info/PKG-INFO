@@ -1,6 +1,6 @@
-Metadata-Version: 2.1
+Metadata-Version: 2.4
 Name: Muyi
-Version: 0.0.8
+Version: 0.0.9
 Summary: Some useful utils.
 Home-page: https://github.com/Muyiiiii/muyi
 Author: muyiiiii
@@ -11,20 +11,55 @@ Classifier: Operating System :: OS Independent
 Requires-Python: >=3
 Description-Content-Type: text/markdown
 License-File: LICENSE
+Provides-Extra: plot
+Requires-Dist: matplotlib; extra == "plot"
+Provides-Extra: csv
+Requires-Dist: pandas; extra == "csv"
+Requires-Dist: tqdm; extra == "csv"
+Provides-Extra: gpu
+Requires-Dist: GPUtil; extra == "gpu"
+Provides-Extra: graph
+Requires-Dist: torch; extra == "graph"
+Requires-Dist: dgl; extra == "graph"
+Provides-Extra: all
+Requires-Dist: matplotlib; extra == "all"
+Requires-Dist: pandas; extra == "all"
+Requires-Dist: tqdm; extra == "all"
+Requires-Dist: GPUtil; extra == "all"
+Requires-Dist: torch; extra == "all"
+Requires-Dist: dgl; extra == "all"
+Dynamic: author
+Dynamic: classifier
+Dynamic: description
+Dynamic: description-content-type
+Dynamic: home-page
+Dynamic: license-file
+Dynamic: provides-extra
+Dynamic: requires-python
+Dynamic: summary
 
 # muyi
 
 Some useful utils for GNNs and Deep Learning.
 
+## Installation
+
 ```bash
-pip install muyi
+pip install muyi              # basic installation
+pip install muyi[plot]        # + matplotlib
+pip install muyi[csv]         # + pandas, tqdm
+pip install muyi[gpu]         # + GPUtil
+pip install muyi[graph]       # + torch, dgl
+pip install muyi[all]         # all dependencies
 ```
 
 ## utils
 
-1. `color_print(content)`
+1. `color_print(content, font_color, bg_color)`
 2. `save_pic_iterly(pic_name, postfix, info)`
 3. `read_csv_tqdm(path, **kwargs)`
+4. `save_result_csv(csv_path, data)`
+5. `get_unique_save_path(folder_path, base_name_pattern, start_no)`
 
 ## graph
 
@@ -34,3 +69,33 @@ pip install muyi
 
 1. `get_gpu_memory_usage()`
 2. `display_gpu_memory_usage()`
+
+## Upload to PyPI
+
+```bash
+# 1. Install build tools
+pip install build twine
+
+# 2. Build package
+python -m build
+
+# 3. Upload to PyPI
+twine upload dist/*
+# Username: __token__
+# Password: your PyPI API Token (starts with pypi-)
+```
+
+Get API Token: https://pypi.org/manage/account/token/
+
+### Save Token Locally (Optional)
+
+Create `~/.pypirc` file to avoid entering credentials each time:
+
+```ini
+[pypi]
+username = __token__
+password = pypi-your-token-here
+```
+
+- **Linux/macOS**: `~/.pypirc`
+- **Windows**: `C:\Users\<username>\.pypirc`
